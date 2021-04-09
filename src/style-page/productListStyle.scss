@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Ubuntu:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+h1,h3 {
+    margin: 0;
+}
+
+.container {
+    margin-left: 77px;
+    margin-right: 77px;
+}
+
+.shop-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 39px
+}
+
+.shop-nav h1 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: #000000;
+    margin-bottom: 0px;
+    
+}
+
+.seacrh {
+    display: flex;
+    align-self: center;
+    
+}
+
+.input-group {
+    margin-right: 6rem;
+    border-bottom: 1px solid #C4C4C4;
+   
+}
+
+.input-group input {
+    border: 0;
+}
+
+.input-group input:focus {
+    outline: 0;
+}
+
+.cartIcon {
+    padding-right: 41px;
+}
+
+.seacrh i {
+    font-size: 20px;
+}
+
+.shop-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 42px;
+}
+
+.shop-content .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;   
+}
+
+.shop-content .product-list .card .isiCard {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.shop-content .product-list .card {
+    width: 173px;
+    height: 116px;
+    background: rgba(231, 240, 242, 0.3);
+    backdrop-filter: blur(1px);
+    margin: 28px 21px;
+    cursor: pointer;
+    
+    
+}
+
+.shop-content .product-list .card:hover {
+    color:red;
+    opacity: 0,8;
+   
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 51px;
+}
+  
+.pagination a {
+   color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    
+
+}
+  
+.pagination a.active {
+    background-color:black;
+    color: white;
+  }
+  
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.shop-content {
+    height: 75vh;
+
+}
+.shop-content .product-list .card p {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.shop-content .feature-list {
+    position: relative;
+    display: flex;
+}
+
+.shop-content .feature-list ul {
+    align-self: flex-end;
+    line-height: 34px;
+    border-left: 1px solid #E7F0F2;
+
+}
+
+
+.shop-content .feature-list ul li {
+    list-style: none;
+    bottom: 0;    
+    font-size: 12px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.shop-content .filter-list {
+    line-height: 34px;
+
+}
+
+.shop-content .filter-list ul {
+    list-style: none;
+    font-size: 12px;
+    font-family: 'Ubuntu', sans-serif;
+    border-right: 1px solid #E7F0F2;
+    padding-right: 22px;
+}
+
+.shop-content .filter-list ul li {
+    font-size: 12px; 
+}
+
+.footer {
+    text-align: center;
+    margin-top: 39px;
+    border-top: 1px solid black;
+}
+

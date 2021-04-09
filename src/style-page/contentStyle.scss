@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Ubuntu:wght@500&display=swap');
+
+
+.bg {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+    width: 49%;
+}
+
+.container2 {
+    margin-left: 77px;
+    margin-right: 77px;
+    display: flex;
+}
+
+.content-left {
+    margin-right: 101px;
+}
+
+.picture {
+    background-color: white;
+    margin-top: 30px;
+    padding-right: 42px;
+    margin-bottom: 10px;
+}
+
+.product-detail {
+    display: flex;
+    margin-top: 57px;
+    background-color: white;
+}
+
+.content-dec {
+    padding-left: 3px;
+}
+
+.swipe {
+    margin-top: -47px;    
+}
+
+.swipe button {
+    background-color: black;
+    color: white;  
+    padding: 8px 14px;
+    font-size: 24px; 
+    margin-right: 6px;
+}
+
+.chart-right {
+    float: right;
+}
+
+.chart-right .cart-data {
+   margin-top: 15px;
+   padding-left: 10px;
+}
+
+.chart-right p {
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    border-right: 3px solid #E7F0F2;
+    padding-right: 15px;
+    padding-bottom: 16px;
+    margin-top: 30px;
+}
+
+.chart-right h6 {
+    margin: 0;
+    display: contents;
+}
+
+.item {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+}
+
+.item h1 {
+    font-weight: 300;
+    font-style: normal;
+    font-size: 37px;
+    color: #363A41;
+    margin-top: 96px;
+    margin-bottom:0px;
+}
+
+.item h2 {
+    font-size: 41px;
+    color: #363A41;
+    margin-top:0px ;
+   
+
+}
+
+.price h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #363A41;
+    margin-bottom: 0px;
+}
+
+.price h5 {
+    font-family: 'Ubuntu', sans-serif;
+    color:rgba(0, 0, 0, 0.3);
+    margin-top: 0px;
+    margin-bottom: 37px;
+
+}
+
+.deskripsi  {
+    font-family: 'Ubuntu', sans-serif;
+    color: rgba(0, 0, 0, 0.3);
+    width: 55%;
+    font-size: 14px;
+}
+
+.list-size {
+    display: flex;
+    margin-top: 34px;
+}
+
+.list-size p {
+    margin-right: 3px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.list-size select {
+    font-family: 'Roboto', sans-serif;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 20px;
+    border: 0px;
+    padding-right: 10px;
+    font-weight: 900;
+}
+
+.list-size select:fokus {
+    outline: 0;
+}
+
+.dec-right {
+    float: right;
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 33px;
+}
+
+.dec-right p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 12px;
+}
+
+.addchart-btn {
+    margin-top: 66px;
+}
+
+.addchart-btn button {
+    background-color: black;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    padding: 17px 33px;
+}
+
+.footer {
+    text-align: center;
+    border-top: 1px solid #C4C4C4;
+    margin-top: 52px;
+    padding-top: 11px;
+}
+
+.footer .icon2 {
+    
+    padding-bottom: 12px;
+  
+}
