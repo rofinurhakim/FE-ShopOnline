@@ -2,59 +2,13 @@ import '../style-page/productListStyle.scss'
 import { CartFill, Search } from 'react-bootstrap-icons'
 import group from '../asset/Group.svg'
 import { useHistory } from 'react-router-dom'
-const ProdukList = () => {
+import data from './../../src/mock/data'
+import { connect } from 'react-redux'
+
+
+const ProdukList = (props) => {
+   
     const history= useHistory()
-    const featureList =  ["ADVENTURE", "ROMANCE", "MAGIC", "HORROR"]
-    const listCard = [
-        {
-            id : '1',
-            title : 'One Piece',
-            category : 'ADVENTURE'
-
-        },
-        {
-            id : '2',
-            title : 'Naruto',
-            category : 'ADVENTURE'   
-        },
-        {
-            id : '3',
-            title : 'Kimi No Nawa',
-            category : 'ROMANCE'
-        },
-        {
-            id : '4',
-            title : 'Sword Art Online',
-            category : 'MAGIC'
-
-        },
-        {
-            id : '5',
-            title : 'AOT',
-            category : 'HORROR'   
-        },
-        {
-            id : '6',
-            title : 'Fairy Tale',
-            category : 'MAGIC'
-        },
-        {
-            id : '7',
-            title : 'Dr. Stone',
-            category : 'ADVENTURE'
-
-        },
-        {
-            id : '8',
-            title : 'Kanojo',
-            category : 'ROMANCE'   
-        },
-        {
-            id : '9',
-            title : 'Class Room',
-            category : 'HORROR'
-        }
-    ]
     return (
         <>
         <div className='container'>
@@ -79,7 +33,7 @@ const ProdukList = () => {
             <div className='shop-content'>
                 <div className='feature-list'>
                     <ul>
-                        {featureList.map((value,index) => {
+                        {data.featureList.map((value,index) => {
                              return <li key={index}>
                                  <a>FEATURED</a>
                                  <li>{value}</li>
@@ -91,10 +45,11 @@ const ProdukList = () => {
                     </ul>
                 </div>
                 <div className='product-list'>
-                    {listCard.map((value,index) => {
-                       return <div onClick={() => history.push ('/contentproduct')} className='card' key={index}>
+                   
+                    {props.productList.map((value,index) => {
+                       return <div onClick={() => history.push (`/product/${value.id}`)} className='card' key={index}>
                            <div  className='isiCard'>
-                            <p>{value.title}</p>
+                            <p>{value.name}</p>
                             <p>{value.category}</p>
                            </div>
                            
@@ -136,4 +91,19 @@ const ProdukList = () => {
     )
 }
 
-export default ProdukList
+
+
+const mapStateToProps = (state) => {
+    return {
+        productList : state.productList   
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // addToChart: () => dispatch({ type: 'GET_PRODUCT_DETAIL_ID', payload: i}),
+        
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProdukList);
