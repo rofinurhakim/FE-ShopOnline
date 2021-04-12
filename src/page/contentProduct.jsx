@@ -8,23 +8,34 @@ import useRouter from 'use-react-router'
 import {useEffect} from 'react'
 import { render } from '@testing-library/react'
 import productList from './productList'
+import * as actionType from '../store/reducer/actions'
 
 
 const ContentProduct = (props) => {
    
 
-    const {productDetail, getProductById, productList, addProductToCart, cart, counterIncrement} = props
+    const {productDetail, getProductById, productList, addProductToCart, cart, counterIncrement, counterDecrement} = props
+    
+    // define methods yang ada di useRouter
     const {match, history} = useRouter()
+
+    
     const counterplus = () => {
         counterIncrement(productDetail)
         getProductById(match.params.id)
         ButtonUI()
     }
+
+    const countermin = () => {
+        counterDecrement(productDetail)
+        getProductById(match.params.id)
+        ButtonUI() 
+    }
     
     useEffect(() => {
-       console.log('jalan')
+       // jalanin function get product by id
        getProductById(match.params.id)
-    }, [getProductById, match.params.id, cart, productDetail.qty, counterplus])
+    }, [getProductById, match.params.id, cart, counterplus])
 
 
     
@@ -36,7 +47,7 @@ const ContentProduct = (props) => {
                 <div className='addchart-btn'>
                 <div>
                     <span>
-                        <button>-</button>
+                        <button onClick={() => countermin()}>-</button>
                     </span>
                     <span>
                         <p>{productDetail.qty}</p>
@@ -61,8 +72,9 @@ const ContentProduct = (props) => {
 
 
     const renderUI = () => {
-        console.log(productDetail)
         const ui = productDetail
+
+        
         if(ui != null) {
             return (
                 <>
@@ -73,6 +85,8 @@ const ContentProduct = (props) => {
                 <br/>
                 <br/>
                 {JSON.stringify(cart)} */}
+                {JSON.stringify(cart)}
+
                     <img className='bg' src={Rectangle3} alt=""/>
                 <div className='container2'>
                     {/* content-left */}
@@ -168,19 +182,19 @@ const ContentProduct = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        counter: state.counter,
-        productDetail: state.productDetail,
-        productList: state.productList,
-        cart: state.cart
+        counter: state.productReducer.counter,
+        productDetail: state.productReducer.productDetail,
+        productList: state.productReducer.productList,
+        cart: state.productReducer.cart
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        getProductById: (id) => dispatch({ type: 'GET_PRODUCT_DETAIL_ID', payload: id}),
-        addProductToCart: (product) => dispatch({type: 'ADD_PRODUCTDETAIL_TO_CART', payload: product}),
-        counterIncrement: (product) => dispatch({type: 'INCREMENT_PRODUCT', payload: product})
-        
+        getProductById: (id) => dispatch({ type: actionType.GET_PRODUCT_DETAIL_ID, payload: id}),
+        addProductToCart: (product) => dispatch({type: actionType.ADD_PRODUCTDETAIL_TO_CART, payload: product}),
+        counterIncrement: (product) => dispatch({type: actionType.INCREMENT_PRODUCT, payload: product}),
+        counterDecrement: (product) => dispatch({type: actionType.DECREMENT_PRODUCT, payload: product})
     }
 }
 

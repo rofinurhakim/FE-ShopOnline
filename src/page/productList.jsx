@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 const ProdukList = (props) => {
    
+    const {productList, categoryList} = props
     const history= useHistory()
     return (
         <>
@@ -23,7 +24,12 @@ const ProdukList = (props) => {
                         
                     </div>
                     <div className='cartIcon'>
-                        <CartFill className='cart-cart'></CartFill>
+                    <div className='chart-right'>
+                            <CartFill className='cart-data'></CartFill>
+                            <h6>{props.cart.length}</h6>
+                           
+                          
+                        </div>
                     </div>
                     
                 </div>
@@ -33,10 +39,10 @@ const ProdukList = (props) => {
             <div className='shop-content'>
                 <div className='feature-list'>
                     <ul>
-                        {data.featureList.map((value,index) => {
+                    <a>FEATURED</a>
+                        {categoryList.map((value,index) => {
                              return <li key={index}>
-                                 <a>FEATURED</a>
-                                 <li>{value}</li>
+                                 <li>{value.name}</li>
                                  </li>
                                  
                         })}
@@ -46,7 +52,7 @@ const ProdukList = (props) => {
                 </div>
                 <div className='product-list'>
                    
-                    {props.productList.map((value,index) => {
+                    {productList.map((value,index) => {
                        return <div onClick={() => history.push (`/product/${value.id}`)} className='card' key={index}>
                            <div  className='isiCard'>
                             <p>{value.name}</p>
@@ -95,7 +101,9 @@ const ProdukList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        productList : state.productList   
+        productList : state.productReducer.productList, 
+        categoryList: state.categoryReducer.category,
+        cart: state.productReducer.cart 
     }
 }
 

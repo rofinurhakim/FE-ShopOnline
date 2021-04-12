@@ -1,8 +1,6 @@
 
-import { act } from 'react-dom/test-utils'
-import Picture from '../asset/Picture.svg'
-import productList from '../page/productList'
-
+import Picture from '../../asset/Picture.svg'
+import * as actionTypes from '../reducer/actions'
 
 
 const initialState = {
@@ -13,6 +11,7 @@ const initialState = {
         {
             id : 1,
             name : 'Item Type/ Name',
+            slug: 'tips-blow-rambut-sendiri',
             type: 'Color',
             image : Picture,
             category : 'ADVENTURE',
@@ -126,11 +125,9 @@ const reducer = (state = initialState, action) => {
     // };
 
     switch(action.type){
-        case 'GET_PRODUCT_DETAIL_ID':
+        case actionTypes.GET_PRODUCT_DETAIL_ID:
             const findProduct = state.productList.find(produk => String(produk.id) === String(action.payload))
-            console.log(state.productList)
-            console.log(action.payload)
-            console.log(findProduct)
+           
             if (findProduct) {
                 return {
                     ...state,
@@ -142,9 +139,7 @@ const reducer = (state = initialState, action) => {
                     productDetail: null
                 }
             }
-            case 'ADD_PRODUCTDETAIL_TO_CART':
-                
-                console.log(state.cart.length)
+            case actionTypes.ADD_PRODUCTDETAIL_TO_CART:
                 if(state.cart.length != 0) {
                     const Product = state.cart.find(produk => String(produk.id) === String(action.payload.id))
                     if(!Product){
@@ -161,22 +156,93 @@ const reducer = (state = initialState, action) => {
                         }
                        
                 }
-         case 'INCREMENT_PRODUCT': {
+         case actionTypes.INCREMENT_PRODUCT: {
                 let carts = state.cart
                 const findIndex = state.cart.findIndex(produk => String(produk.id) === String(action.payload.id))
-                console.log(findIndex)
-                console.log(state.cart[findIndex])
-                console.log(carts[findIndex])
+               
 
                 if(findIndex >= 0) {
                     carts[findIndex].qty = carts[findIndex].qty + 1
                 }
                 return {
                     ...state,
-                    cart: carts
-                    
+                    cart: carts,
+                    productDetail: state.productDetail.qty + 1                     
                 }
          }
+         case actionTypes.DECREMENT_PRODUCT: {
+            // update qty nilai product detail, isinya 1
+            // update qty nilai di cart sesuai dengan product, isinta bisa lebih dari 1
+
+            let carts = state.cart
+
+            // cart = [
+            //     {
+            //         x.id : 6,
+            //         x.category : 'ADVENTURE',
+            //         x.name : 'Item Type/ Name 3',  // index 0
+            //     },
+            //     {
+            //         id : 7,
+            //         category : 'ADVENTURE',
+            //         name : 'Item Type/ Name 3', // index 1
+            //     }
+            // ]
+
+            // const cart = [
+            //     {
+            //         id : 6,
+            //         category : 'ADVENTURE',
+            //         name : 'Item Type/ Name 6',  // index 0
+            //     },
+            //     {
+            //         id : 7,
+            //         category : 'ADVENTURE',
+            //         name : 'Item Type/ Name 7', // index 1
+            //     },
+            //     {
+            //         id : 8,
+            //         category : 'ADVENTURE',
+            //         name : 'Item Type/ Name 3', // index 1
+            //     }
+            // ]
+            const findIndex = carts.findIndex(x => String(x.id) === String(action.payload.id))
+            // console.log(findIndex)
+            // console.log(cart[findIndex]) // cart[0]
+
+            // jika product ada, findIndex != -1 / >= 0
+            // jika qty cart == 1, maka hapus / filter product yang qty 1 hapus dari cart
+            // jika qty cart > 1, makan tetep kurangin
+
+            if(findIndex >= 0){
+                if(state.productDetail.qty <= 1) {
+                    console.log(state.cart)
+                    const newCarts = state.cart.filter(x => String(x.id) !== String(action.payload.id))
+                    console.log(newCarts)
+
+                    return {
+                        ...state,
+                        cart: newCarts
+                    }
+                } else {
+                    carts[findIndex].qty = carts[findIndex].qty - 1
+                    return {
+                            ...state,
+                            cart: carts,
+                            productDetail: state.productDetail.qty - 1                     
+                        }
+                }
+            }
+
+            // if(findIndex >= 0) {
+            //     carts[findIndex].qty = carts[findIndex].qty - 1
+            // }
+            // return {
+            //     ...state,
+            //     cart: carts,
+            //     productDetail: state.productDetail.qty - 1                     
+            // }
+     }
                 
               
                 
