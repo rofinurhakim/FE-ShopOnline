@@ -9,12 +9,21 @@ import {useEffect} from 'react'
 import { render } from '@testing-library/react'
 import productList from './productList'
 import * as actionType from '../store/reducer/actions'
+import { NavItem } from 'react-bootstrap'
 
 
 const ContentProduct = (props) => {
    
 
-    const {productDetail, getProductById, productList, addProductToCart, cart, counterIncrement, counterDecrement} = props
+    const {
+        productDetail, 
+        getProductById, 
+        productList, 
+        addProductToCart, 
+        cart, 
+        counterIncrement, 
+        counterDecrement, 
+        changeSizeProductDetail} = props
     
     // define methods yang ada di useRouter
     const {match, history} = useRouter()
@@ -30,6 +39,18 @@ const ContentProduct = (props) => {
         counterDecrement(productDetail)
         getProductById(match.params.id)
         ButtonUI() 
+    }
+
+    const selectSize = (event) => {
+        changeSizeProductDetail(event.target.value)
+    }
+
+    const validasiCheck = () => {
+        if(productDetail.size == null || productDetail.size == '') {
+            alert('Mohon Pilih Size')
+        } else {
+            addProductToCart(productDetail)
+        }
     }
     
     useEffect(() => {
@@ -62,7 +83,7 @@ const ContentProduct = (props) => {
             return (
                 <div className='addchart-btn'>
                 <button onClick={() => {
-                   addProductToCart(productDetail)
+                  validasiCheck()
                     
                 }}>ADD TO CART</button>
             </div>
@@ -85,6 +106,9 @@ const ContentProduct = (props) => {
                 <br/>
                 <br/>
                 {JSON.stringify(cart)} */}
+                {JSON.stringify(productDetail)}
+                <br/>
+                <br/>
                 {JSON.stringify(cart)}
 
                     <img className='bg' src={Rectangle3} alt=""/>
@@ -121,9 +145,10 @@ const ContentProduct = (props) => {
                         </div>
                         <div className='list-size'>
                             <p>Size:</p>
-                            <select name="size-list" id="size">
-                                <option value="MEDIUM">Medium</option>
-                                <option value="LARGE">Large</option>
+                            <select value={productDetail.size} onChange={selectSize} name="size-list" id="size">
+                            <option value="">Pilih Size</option>
+                                <option value="M">Medium</option>
+                                <option value="L">Large</option>
                             </select>
                         </div>
                         <div className='dec-right'>
@@ -194,7 +219,8 @@ const mapDispatchToProps = (dispatch) => {
         getProductById: (id) => dispatch({ type: actionType.GET_PRODUCT_DETAIL_ID, payload: id}),
         addProductToCart: (product) => dispatch({type: actionType.ADD_PRODUCTDETAIL_TO_CART, payload: product}),
         counterIncrement: (product) => dispatch({type: actionType.INCREMENT_PRODUCT, payload: product}),
-        counterDecrement: (product) => dispatch({type: actionType.DECREMENT_PRODUCT, payload: product})
+        counterDecrement: (product) => dispatch({type: actionType.DECREMENT_PRODUCT, payload: product}),
+        changeSizeProductDetail: (size) => dispatch({type: actionType.CHANGE_SIZE, payload: size})
     }
 }
 

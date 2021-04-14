@@ -4,12 +4,49 @@ import group from '../asset/Group.svg'
 import { useHistory } from 'react-router-dom'
 import data from './../../src/mock/data'
 import { connect } from 'react-redux'
+import {useEffect} from 'react'
+import * as actionType from '../store/reducer/actions'
 
 
 const ProdukList = (props) => {
    
-    const {productList, categoryList} = props
+    const {productList, categoryList, totalpage, show, totaldata, page,list, getProducts, changePageRedux} = props
     const history= useHistory()
+
+
+    useEffect(() => {
+        // show berapa
+        // page berapa
+        const data = {
+            show: show,
+            page: page
+        }
+        console.log(`${show} & ${page}`)
+         getProducts(data)
+     }, [])
+
+     const changePage = (event) => {
+         console.log(event.target.innerHTML)
+         console.log(typeof event.target.innerHTML)
+         const data = {
+            show: show,
+            page: parseInt(event.target.innerHTML)
+        }
+         changePageRedux(data)
+     }
+
+    const renderPage = () => {
+        let templatePage = []
+        for(let i = 1; i <= totalpage; i++) {
+            if(page == i) {
+                templatePage.push(<a onClick={changePage} className='active' href="#">{i}</a>)
+            } else {
+                templatePage.push(<a onClick={changePage} href="#">{i}</a>)
+            }
+           
+        }
+        return templatePage
+    }
     return (
         <>
         <div className='container'>
@@ -52,7 +89,7 @@ const ProdukList = (props) => {
                 </div>
                 <div className='product-list'>
                    
-                    {productList.map((value,index) => {
+                    {list.map((value,index) => {
                        return <div onClick={() => history.push (`/product/${value.id}`)} className='card' key={index}>
                            <div  className='isiCard'>
                             <p>{value.name}</p>
@@ -76,16 +113,22 @@ const ProdukList = (props) => {
                     </ul>
                 </div>
             </div>
-
+                    
+            <p>Show: {show}</p>
+            <p>Total Data: {productList.length}</p>
             {/* footer */}
             <div className='pagination'>
                 <a href="#">&laquo;</a>
-                <a className='active' href="#">1</a>
+                {/* {totalpage.map((data, i) => {
+                    return <a href="#">{i + 1}</a>
+                })} */}
+                {renderPage()}
+                {/* <a className='active' href="#">1</a>
                 <a href="#">2</a>
                 <a href="#">3</a>
                 <a href="#">4</a>
                 <a href="#">5</a>
-                <a href="#">6</a>
+                <a href="#">6</a> */}
                 <a href="#">&raquo;</a>
             </div>
         </div>
@@ -103,14 +146,20 @@ const mapStateToProps = (state) => {
     return {
         productList : state.productReducer.productList, 
         categoryList: state.categoryReducer.category,
-        cart: state.productReducer.cart 
+        cart: state.productReducer.cart,
+        totalpage: state.productReducer.totalpage,
+        show: state.productReducer.show,
+        totaldata: state.productReducer.totaldata,
+        page: state.productReducer.page,
+        list: state.productReducer.list
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         // addToChart: () => dispatch({ type: 'GET_PRODUCT_DETAIL_ID', payload: i}),
-        
+        getProducts: (data) => dispatch({type: actionType.GET_LIST, payload: data }),
+        changePageRedux: (data) => dispatch({type: actionType.CHANGE_PAGE, payload: data})
     }
 }
 

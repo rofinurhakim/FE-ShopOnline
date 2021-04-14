@@ -1,5 +1,6 @@
 
 import Picture from '../../asset/Picture.svg'
+import productList from '../../page/productList'
 import * as actionTypes from '../reducer/actions'
 
 
@@ -7,10 +8,15 @@ const initialState = {
     counter: 0,
     cart: [],
     productDetail: [],
+    list: [],
+    page: 1,
+    totaldata: 6,
+    show: 4,
+    totalpage: 3,
     productList: [
         {
             id : 1,
-            name : 'Item Type/ Name',
+            name : 'Item Type/ Name 1',
             slug: 'tips-blow-rambut-sendiri',
             type: 'Color',
             image : Picture,
@@ -19,7 +25,7 @@ const initialState = {
             priceStrikethough : 39.99,
             descname: 'Kacamata tampan dan berani',
             desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
+            size: null,
             source: ' 100% Cotton',
             gender:' Mens',
             qty: 0
@@ -34,7 +40,7 @@ const initialState = {
             priceStrikethough : 39.99,
             descname: 'Kacamata tampan dan berani',
             desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
+            size: null,
             source: ' 100% Cotton',
             gender:' Mens',
             qty: 0
@@ -49,7 +55,7 @@ const initialState = {
             priceStrikethough : 39.99,
             descname: 'Kacamata tampan dan berani',
             desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
+            size: null,
             source: ' 100% Cotton',
             gender:' Mens',
             qty: 0
@@ -64,56 +70,17 @@ const initialState = {
             priceStrikethough : 39.99,
             descname: 'Kacamata tampan dan berani',
             desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
+            size: null,
             source: ' 100% Cotton',
             gender:' Mens',
             qty: 1
         },
-        {
-            id : 5,
-            category : 'ADVENTURE',
-            name : 'Item Type/ Name 3',
-            type: 'Color',
-            image : Picture,
-            price : 19.99,
-            priceStrikethough : 39.99,
-            descname: 'Kacamata tampan dan berani',
-            desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
-            source: ' 100% Cotton',
-            gender:' Mens',
-            qty: 1
-        },
-        {
-            id : 6,
-            category : 'ADVENTURE',
-            name : 'Item Type/ Name 3',
-            type: 'Color',
-            image : Picture,
-            price : 19.99,
-            priceStrikethough : 39.99,
-            descname: 'Kacamata tampan dan berani',
-            desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
-            source: ' 100% Cotton',
-            gender:' Mens',
-            qty: 0
-        },
-        {
-            id : 7,
-            category : 'ADVENTURE',
-            name : 'Item Type/ Name 3',
-            type: 'Color',
-            image : Picture,
-            price : 19.99,
-            priceStrikethough : 39.99,
-            descname: 'Kacamata tampan dan berani',
-            desc:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen`,
-            size: 'medium',
-            source: ' 100% Cotton',
-            gender:' Mens',
-            qty: 0
-        }
+      
+        
+        
+        
+       
+        
 
         
     ]
@@ -217,6 +184,7 @@ const reducer = (state = initialState, action) => {
             if(findIndex >= 0){
                 if(state.productDetail.qty <= 1) {
                     console.log(state.cart)
+                    console.log('Jalan nih')
                     const newCarts = state.cart.filter(x => String(x.id) !== String(action.payload.id))
                     console.log(newCarts)
 
@@ -225,6 +193,7 @@ const reducer = (state = initialState, action) => {
                         cart: newCarts
                     }
                 } else {
+                    console.log('kalo nggak jalan')
                     carts[findIndex].qty = carts[findIndex].qty - 1
                     return {
                             ...state,
@@ -243,6 +212,138 @@ const reducer = (state = initialState, action) => {
             //     productDetail: state.productDetail.qty - 1                     
             // }
      }
+     case actionTypes.CHANGE_SIZE: {
+        let a = 'variabel'
+        a = 'rubah variabel'
+
+       return {
+           ...state,
+           productDetail: state.productDetail.size = action.payload
+       }
+    }
+    case actionTypes.GET_LIST: {
+        console.log(action.payload)
+        let totaldata = state.productList.length // 6
+        let totalpage = 0
+        console.log(7/2) // 1
+
+        // jika bagi sisa ada maka tambah 1 page
+        // kalo nggak ada genapin
+
+        if(totaldata % action.payload.show == 0) {
+            
+            totalpage = totaldata / action.payload.show
+        } else {
+            
+            totalpage = Math.floor(totaldata / action.payload.show) + 1
+        }
+
+        // total data 6
+        // show
+        // looping 2
+        // page 1, data 1 - 2
+        // page 2, data 3 - 4
+        // page 3, data 5 - 6
+        let listfinal = []
+
+        if(action.payload.page == 1) {
+            // looping
+                    // 1                   2
+            for(let i = 1; i <= action.payload.show; i++) {
+                //  2 <= 2 ? ya
+
+                listfinal.push(state.productList[i-1])
+            }
+        } else if (action.payload.page <= totalpage) {
+                            // 4 - 6
+                            // 4 - 5
+            for(let i = action.payload.show * (action.payload.page - 1); i < action.payload.show * action.payload.page; i++) {
+                // showing x (page - 1) )  + 1
+                // 2
+                // 3
+                // 4 == 4
+                if(state.productList[i]) {
+                    listfinal.push(state.productList[i])
+                }
+               
+            }
+        } else {
+            listfinal = []
+        }
+        
+        
+        
+        
+    
+        console.log('total page adalah = ' + totalpage)
+
+        return {
+            ...state,
+            totaldata: totaldata,
+            totalpage: totalpage,
+            list: listfinal
+        }
+ }
+ case actionTypes.CHANGE_PAGE: {
+    console.log(action.payload)
+    let totaldata = state.productList.length // 6
+    let totalpage = 0
+    console.log(7/2) // 1
+
+    // jika bagi sisa ada maka tambah 1 page
+    // kalo nggak ada genapin
+
+    if(totaldata % action.payload.show == 0) {
+        
+        totalpage = totaldata / action.payload.show
+    } else {
+        
+        totalpage = Math.floor(totaldata / action.payload.show) + 1
+    }
+
+    // total data 6
+    // show
+    // looping 2
+    // page 1, data 1 - 2
+    // page 2, data 3 - 4
+    // page 3, data 5 - 6
+    let listfinal = []
+
+    if(action.payload.page == 1) {
+        // looping
+                // 1                   2
+        for(let i = 1; i <= action.payload.show; i++) {
+            //  2 <= 2 ? ya
+
+            listfinal.push(state.productList[i-1])
+        }
+    } else if (action.payload.page <= totalpage) {
+                        // 4 - 6
+                        // 4 - 5
+        for(let i = action.payload.show * (action.payload.page - 1); i < action.payload.show * action.payload.page; i++) {
+            // showing x (page - 1) )  + 1
+            // 2
+            // 3
+            // 4 == 4
+            if(state.productList[i]) {
+                listfinal.push(state.productList[i])
+            }
+           
+        }
+    } else {
+        listfinal = []
+    }
+
+    console.log('total page adalah = ' + totalpage)
+
+    return {
+        ...state,
+        totaldata: totaldata,
+        totalpage: totalpage,
+        page: action.payload.page,
+        list: listfinal
+    }
+}
                 
               
                 
