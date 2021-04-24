@@ -4,17 +4,40 @@ import group from '../asset/Group.svg'
 import { useHistory } from 'react-router-dom'
 import data from './../../src/mock/data'
 import { connect } from 'react-redux'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import * as actionType from '../store/reducer/actions'
+const axios = require('axios');
+
+// const instance = axios.create({
+//     baseURL: 'http://localhost:3000',
+//     timeout: 1000,
+//     headers: {'X-Custom-Header': 'foobar'}
+//   });
 
 
 const ProdukList = (props) => {
    
     const {productList, categoryList, totalpage, show, totaldata, page,list, getProducts, changePageRedux} = props
     const history= useHistory()
+    let [productEx, setProductEx] = useState([])
 
 
     useEffect(() => {
+        axios.defaults.baseURL = 'http://localhost:3000';
+        // Make a request for a user with a given ID
+        axios.get('/products')
+        .then(function (response) {
+                    // handle success
+                    console.log(response.data.data);
+                        setProductEx(prevState => response.data.data)
+                    })
+        .catch(function (error) {
+                // handle error
+                console.log(error);
+                alert('Data tidak Ditemukan')
+        })
+
+
         // show berapa
         // page berapa
         const data = {
@@ -50,6 +73,7 @@ const ProdukList = (props) => {
     return (
         <>
         <div className='container'>
+            {JSON.stringify(productEx)}
             
             {/* Navbar-Section */}
             <div className='shop-nav'>
@@ -87,6 +111,23 @@ const ProdukList = (props) => {
                        
                     </ul>
                 </div>
+
+                <div className='product-list'>
+                   
+                   {productEx.map((value,index) => {
+                      return <div onClick={() => history.push (`/product/${value.nama}`)} className='card' key={index}>
+                          <div  className='isiCard'>
+                           <p>{value.nama}</p>
+                           <p>{value.category}</p>
+                          </div>
+                          
+
+                       </div>
+                   } )}
+                   
+
+               </div>
+
                 <div className='product-list'>
                    
                     {list.map((value,index) => {
