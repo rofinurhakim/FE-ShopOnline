@@ -30,8 +30,8 @@ const MainPage = () => {
         <div className='container1'>
             <div className='title'>
                 <div className='header1'>
-                    <h1>Choose <b>as you want</b></h1>
-                    <h1>Pay <b>as you can</b></h1>
+                    <h1>Welcome To <b>Anime World</b></h1>
+                    <h1>Buy Now <b>The Item</b></h1>
                 </div>
                 <div className='sub-header'>
                     <p>LATEST</p>
