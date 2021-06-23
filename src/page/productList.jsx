@@ -5,7 +5,9 @@ import { useHistory } from 'react-router-dom'
 import data from './../../src/mock/data'
 import { connect } from 'react-redux'
 import {useEffect, useState} from 'react'
+import NoData from '../component/noData'
 import * as actionType from '../store/reducer/actions'
+import Paginet from '../component/pagination'
 import client from "../service/axios"
 
 
@@ -16,9 +18,10 @@ const ProdukList = (props) => {
     const {productList, categoryList, show, totaldata,list, getProducts, changePageRedux} = props
     const history= useHistory()
     let [productEx, setProductEx] = useState([])
-    let [limit, setLimit] = useState(6)
-    let [page, setPage] = useState(6)
-    let [totalpage, setTotalPage] = useState(6)
+    let [limit, setLimit] = useState(1)
+    let [page, setPage] = useState(1)
+    let [totalpage, setTotalPage] = useState(3)
+    const [search, setSearch] = useState("");
 
 
     useEffect(() => {
@@ -57,6 +60,60 @@ const ProdukList = (props) => {
         // page berapa
        
      }, [page])
+     
+        
+  const getList = () => {
+    client
+      .get("/api/v1/products", {
+        params: {
+          page,
+          limit,
+          search
+        },
+      })
+      .then((res) => {
+        console.log(res);
+
+        setProductEx((prevState) => res.data.products);
+        setTotalPage((prevState) => res.data.pageCount);
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    const getList = () => {
+      client
+        .get("/api/v1/products", {
+          params: {
+            page,
+            limit,
+            search
+          
+          },
+        })
+        .then((res) => {
+          setProductEx((prevState) => res.data.products);
+          setTotalPage((prevState) => res.data.pageCount);
+        })
+        .catch((err) => {});
+    };
+
+    getList();
+  }, [limit, page, search]);
+
+  const searchHandler = (e) => {
+    const { value } = e.target;
+    setSearch((prevState) => value);
+
+    if (e.keyCode === 13) {
+      doSearch();
+    }
+  };
+
+  const doSearch = () => {
+    getList();
+  };
+
 
 
      const changePage = (event) => {
@@ -92,14 +149,21 @@ const ProdukList = (props) => {
                 <h1>Anime Shop</h1>
                 <div className='seacrh'>
                     <div className='input-group'>
-                        <input type="text"/>
+                        <input
+                             type="text"
+                             id="searchText"
+                             placeholder="Search here..."
+                             onChange={(e) => searchHandler(e)}
+                        />
                         <Search></Search>
                         
                     </div>
                     <div className='cartIcon'>
+                        
                     <div className='chart-right'>
                             <CartFill className='cart-data'></CartFill>
                             <h6>{props.cart.length}</h6>
+                           
                            
                           
                         </div>
@@ -125,7 +189,6 @@ const ProdukList = (props) => {
                 </div>
 
                 <div className='product-list'>
-                   
                    {productEx.map((value,index) => {
                       return <div onClick={() => history.push (`/product/${value.id}`)} className='card' key={index}>
                           <div  className='isiCard'>
@@ -151,11 +214,9 @@ const ProdukList = (props) => {
                             <p>{value.category}</p>
                            </div>
                            
-
                         </div>
                     } )}
                     
-
                 </div> */}
                 <div className='filter-list'>
                     <ul>
@@ -168,7 +229,9 @@ const ProdukList = (props) => {
                     </ul>
                 </div>
             </div>
-                    
+            <div className="backMain">
+                <h6 onClick={() => history.push ('/')} >Go Back</h6>
+            </div>     
             <p>Show: {show}</p>
             <p>Total Data: {productList.length}</p>
             {/* footer */}
@@ -184,8 +247,10 @@ const ProdukList = (props) => {
                 <a href="#">4</a>
                 <a href="#">5</a>
                 <a href="#">6</a> */}
-                <a href="#">&raquo;</a>
+                <a  href="#">&raquo;</a>
             </div>
+            
+            
         </div>
         <div className='footer'>
             <img className='icon' src={group} alt=""/>
@@ -194,6 +259,8 @@ const ProdukList = (props) => {
         </>
     )
 }
+
+
 
 
 

@@ -1,10 +1,22 @@
 import '../style-page/mainStyle.scss'
-import Mainbg from '../asset/Mainbg.svg'
+import Mainbg from '../asset/sasukeBG.jpg'
 import { useHistory } from 'react-router-dom'
 import Group from '../asset/Group.svg'
+import { useState, useEffect } from 'react'
+import {onLogout, LogoutData } from '../store/reducer/register'
 
 const MainPage = () => {
     const history = useHistory()
+    const [user, setUser] = useState(null)
+    const onLogout = () => {
+        LogoutData(routeLogout)
+        routeLogout()
+      } 
+    
+      const routeLogout = () => {
+        history.push('/login')
+        history.go()
+      }
     const elements = [
         {
             id :1,
@@ -23,6 +35,13 @@ const MainPage = () => {
         }
     ];
 
+    useEffect(() => {
+        // Update the document title using the browser API
+          const dataUser = JSON.parse(localStorage.getItem('user'))
+          console.log(dataUser)
+          setUser(dataUser)
+      }, []);
+
     return (
         <>
       
@@ -34,8 +53,8 @@ const MainPage = () => {
                     <h1>Buy Now <b>The Item</b></h1>
                 </div>
                 <div className='sub-header'>
-                    <p>LATEST</p>
-                    <p>ALL</p>
+                    <h5> Hi, {user ? user.nama_lengkap : ""}</h5>
+                    <p  onClick={() => onLogout()}>Log Out</p>
                 </div>
             </div>
             {/* CONTENT SECTION */}

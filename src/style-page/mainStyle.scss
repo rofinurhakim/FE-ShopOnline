@@ -48,7 +48,22 @@
    font-size: 12px;
    font-weight: 600;
    margin-bottom: 20px;
+   cursor: pointer;
    
+}
+
+.title .sub-header h5 {
+   color: rgba(0, 0, 0, 0.4);
+   font-size: 16px;
+   font-weight: 600;
+   margin-bottom: 20px;
+  
+   
+}
+
+.title .sub-header p:hover {
+   color: red;
+   opacity: 0.8;
 }
 
 .mainpage-content {

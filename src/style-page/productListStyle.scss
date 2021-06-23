@@ -72,9 +72,6 @@ h1,h3 {
     left: 10px;
 }
 
-.isiCard img {
-    height: 10;
-}
 
 .shop-content .product-list .card {
     width: 173px;
@@ -109,6 +106,18 @@ h1,h3 {
     font-size: 14px;
     
 
+}
+
+.backMain h6 {
+    float: right;
+    font-size: 15px;
+    margin-right: 5px;
+    border-bottom: 1px solid black;
+}
+
+.backMain h6:hover {
+    color: red;
+    cursor: pointer;
 }
   
 .pagination a.active {

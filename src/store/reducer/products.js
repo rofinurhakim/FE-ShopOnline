@@ -1,4 +1,3 @@
-
 import Picture from '../../asset/Picture.svg'
 import productList from '../../page/productList'
 import * as actionTypes from '../reducer/actions'
